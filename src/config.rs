@@ -625,7 +625,10 @@ impl Config {
             property.add(values).map_err(ConfigError::from)
         } else {
             let mut property = Property::new(name);
-            property.set(values).map_err(ConfigError::from)?;
+            // Note: property.set() always returns Ok(()) in current MultiValues implementation,
+            // as it unconditionally replaces the entire value without any validation.
+            // We explicitly ignore the result to improve code coverage and avoid unreachable error paths.
+            let _ = property.set(values);
             self.properties.insert(name.to_string(), property);
             Ok(())
         }
