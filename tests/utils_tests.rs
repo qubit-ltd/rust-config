@@ -81,10 +81,7 @@ fn test_substitute_empty_string() {
 fn test_substitute_variable_not_found() {
     let config = Config::new();
     let result = substitute_variables("${NONEXISTENT_VAR}", &config, 10);
-    assert!(matches!(
-        result,
-        Err(ConfigError::SubstitutionError(_))
-    ));
+    assert!(matches!(result, Err(ConfigError::SubstitutionError(_))));
 
     if let Err(ConfigError::SubstitutionError(msg)) = result {
         assert!(msg.contains("Cannot resolve variable: NONEXISTENT_VAR"));
@@ -105,11 +102,7 @@ fn test_substitute_mixed_sources() {
     let mut config = Config::new();
     config.set("CONFIG_VAR", "from_config").unwrap();
 
-    let result = substitute_variables(
-        "${CONFIG_VAR} and ${ENV_VAR}",
-        &config,
-        10
-    ).unwrap();
+    let result = substitute_variables("${CONFIG_VAR} and ${ENV_VAR}", &config, 10).unwrap();
     assert_eq!(result, "from_config and from_env");
 
     std::env::remove_var("ENV_VAR");

@@ -683,7 +683,8 @@ impl Config {
     /// Returns the string value or default value
     ///
     pub fn get_string_or(&self, name: &str, default: &str) -> String {
-        self.get_string(name).unwrap_or_else(|_| default.to_string())
+        self.get_string(name)
+            .unwrap_or_else(|_| default.to_string())
     }
 
     /// Gets a list of string configuration values (with variable substitution)

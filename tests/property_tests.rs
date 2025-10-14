@@ -760,7 +760,7 @@ fn test_property_float32_get() {
 #[test]
 fn test_property_float32_get_first() {
     let mut prop = Property::new("test");
-    prop.set_value(MultiValues::Float32(vec![3.5, 2.71]));
+    prop.set_value(MultiValues::Float32(vec![3.5, 2.72]));
 
     let first = prop.get_first_float32().unwrap();
     assert_eq!(first, 3.5);
@@ -1356,7 +1356,7 @@ fn test_property_generic_get_first_string() {
 #[test]
 fn test_property_generic_get_first_float64() {
     let mut prop = Property::new("test");
-    prop.set_value(MultiValues::Float64(vec![3.5, 2.71]));
+    prop.set_value(MultiValues::Float64(vec![3.5, 2.72]));
 
     let first: f64 = prop.get_first().unwrap();
     assert_eq!(first, 3.5);

@@ -1135,10 +1135,7 @@ mod test_final_property {
 
         // Try to set again - should fail
         let result = config.set("immutable_key", "new_value");
-        assert!(matches!(
-            result,
-            Err(ConfigError::PropertyIsFinal(_))
-        ));
+        assert!(matches!(result, Err(ConfigError::PropertyIsFinal(_))));
 
         // Verify error message
         if let Err(ConfigError::PropertyIsFinal(name)) = result {
@@ -1155,7 +1152,9 @@ mod test_final_property {
         let mut config = Config::new();
 
         // Set initial value
-        config.set("immutable_list", vec!["value1", "value2"]).unwrap();
+        config
+            .set("immutable_list", vec!["value1", "value2"])
+            .unwrap();
 
         // Mark as final
         if let Some(prop) = config.get_property_mut("immutable_list") {
@@ -1164,10 +1163,7 @@ mod test_final_property {
 
         // Try to add - should fail
         let result = config.add("immutable_list", "value3");
-        assert!(matches!(
-            result,
-            Err(ConfigError::PropertyIsFinal(_))
-        ));
+        assert!(matches!(result, Err(ConfigError::PropertyIsFinal(_))));
 
         // Verify error message
         if let Err(ConfigError::PropertyIsFinal(name)) = result {
@@ -1226,10 +1222,10 @@ mod test_final_property {
         assert!(config.set("final_bool", false).is_err());
 
         // Test with float
-        config.set("final_float", 3.14).unwrap();
+        config.set("final_float", 3.15).unwrap();
         if let Some(prop) = config.get_property_mut("final_float") {
             prop.set_final(true);
         }
-        assert!(config.set("final_float", 2.71).is_err());
+        assert!(config.set("final_float", 2.72).is_err());
     }
 }
