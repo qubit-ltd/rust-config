@@ -6,13 +6,13 @@
  *    All rights reserved.
  *
  ******************************************************************************/
-//! # 配置工具函数测试
+//! # Configuration Utility Function Tests
 //!
-//! 测试配置工具函数的功能，包括变量替换等。
+//! Tests configuration utility functions, including variable substitution.
 //!
-//! # 作者
+//! # Author
 //!
-//! 胡海星
+//! Hu Haixing
 
 use prism3_config::{substitute_variables, Config, ConfigError};
 

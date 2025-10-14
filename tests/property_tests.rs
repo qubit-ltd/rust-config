@@ -6,13 +6,13 @@
  *    All rights reserved.
  *
  ******************************************************************************/
-//! # Property 单元测试
+//! # Property Unit Tests
 //!
-//! 测试 Property 结构体的所有公共方法，包括委托给 MultiValues 的方法。
+//! Tests all public methods of the Property struct, including methods delegated to MultiValues.
 //!
-//! # 作者
+//! # Author
 //!
-//! 胡海星
+//! Hu Haixing
 
 use bigdecimal::BigDecimal;
 use chrono::{DateTime, NaiveDate, NaiveTime};
@@ -23,7 +23,7 @@ use prism3_value::MultiValues;
 use std::str::FromStr;
 
 // ============================================================================
-// Property 基本方法测试
+// Property Basic Method Tests
 // ============================================================================
 
 #[test]
@@ -94,14 +94,14 @@ fn test_property_set_value() {
 fn test_property_description() {
     let mut prop = Property::new("test");
 
-    // 初始状态
+    // Initial state
     assert!(prop.description().is_none());
 
-    // 设置描述
-    prop.set_description(Some("测试属性".to_string()));
-    assert_eq!(prop.description(), Some("测试属性"));
+    // Set description
+    prop.set_description(Some("Test property".to_string()));
+    assert_eq!(prop.description(), Some("Test property"));
 
-    // 清除描述
+    // Clear description
     prop.set_description(None);
     assert!(prop.description().is_none());
 }
@@ -110,14 +110,14 @@ fn test_property_description() {
 fn test_property_is_final() {
     let mut prop = Property::new("test");
 
-    // 初始状态
+    // Initial state
     assert!(!prop.is_final());
 
-    // 设置为最终值
+    // Set as final
     prop.set_final(true);
     assert!(prop.is_final());
 
-    // 取消最终值
+    // Unset final
     prop.set_final(false);
     assert!(!prop.is_final());
 }
@@ -126,10 +126,10 @@ fn test_property_is_final() {
 fn test_property_data_type() {
     let mut prop = Property::new("test");
 
-    // 默认类型
+    // Default type
     assert_eq!(prop.data_type(), DataType::Int32);
 
-    // 设置不同类型
+    // Set different types
     prop.set_value(MultiValues::String(vec!["test".to_string()]));
     assert_eq!(prop.data_type(), DataType::String);
 
@@ -141,14 +141,14 @@ fn test_property_data_type() {
 fn test_property_count() {
     let mut prop = Property::new("test");
 
-    // 空值
+    // Empty value
     assert_eq!(prop.count(), 0);
 
-    // 单值
+    // Single value
     prop.set_value(MultiValues::Int32(vec![42]));
     assert_eq!(prop.count(), 1);
 
-    // 多值
+    // Multiple values
     prop.set_value(MultiValues::Int32(vec![1, 2, 3, 4, 5]));
     assert_eq!(prop.count(), 5);
 }
@@ -157,14 +157,14 @@ fn test_property_count() {
 fn test_property_is_empty() {
     let mut prop = Property::new("test");
 
-    // 空值
+    // Empty
     assert!(prop.is_empty());
 
-    // 有值
+    // Has value
     prop.set_value(MultiValues::Int32(vec![42]));
     assert!(!prop.is_empty());
 
-    // 清空后
+    // After clearing
     prop.clear();
     assert!(prop.is_empty());
 }
@@ -177,11 +177,11 @@ fn test_property_clear() {
     assert_eq!(prop.count(), 3);
     prop.clear();
     assert_eq!(prop.count(), 0);
-    assert_eq!(prop.data_type(), DataType::Int32); // 类型保持不变
+    assert_eq!(prop.data_type(), DataType::Int32); // Type remains unchanged
 }
 
 // ============================================================================
-// Deref 委托方法测试 - Bool 类型
+// Deref Delegation Method Tests - Bool Type
 // ============================================================================
 
 #[test]
@@ -225,7 +225,7 @@ fn test_property_bool_set() {
 }
 
 // ============================================================================
-// Deref 委托方法测试 - Char 类型
+// Deref Delegation Method Tests - Char Type
 // ============================================================================
 
 #[test]
@@ -269,7 +269,7 @@ fn test_property_char_set() {
 }
 
 // ============================================================================
-// Deref 委托方法测试 - Int8 类型
+// Deref Delegation Method Tests - Int8 Type
 // ============================================================================
 
 #[test]
@@ -313,7 +313,7 @@ fn test_property_int8_set() {
 }
 
 // ============================================================================
-// Deref 委托方法测试 - Int16 类型
+// Deref Delegation Method Tests - Int16 Type
 // ============================================================================
 
 #[test]
@@ -357,7 +357,7 @@ fn test_property_int16_set() {
 }
 
 // ============================================================================
-// Deref 委托方法测试 - Int32 类型
+// Deref Delegation Method Tests - Int32 Type
 // ============================================================================
 
 #[test]
@@ -401,7 +401,7 @@ fn test_property_int32_set() {
 }
 
 // ============================================================================
-// Deref 委托方法测试 - Int64 类型
+// Deref Delegation Method Tests - Int64 Type
 // ============================================================================
 
 #[test]
@@ -445,7 +445,7 @@ fn test_property_int64_set() {
 }
 
 // ============================================================================
-// Deref 委托方法测试 - Int128 类型
+// Deref Delegation Method Tests - Int128 Type
 // ============================================================================
 
 #[test]
@@ -506,7 +506,7 @@ fn test_property_int128_set() {
 }
 
 // ============================================================================
-// Deref 委托方法测试 - UInt8 类型
+// Deref Delegation Method Tests - UInt8 Type
 // ============================================================================
 
 #[test]
@@ -550,7 +550,7 @@ fn test_property_uint8_set() {
 }
 
 // ============================================================================
-// Deref 委托方法测试 - UInt16 类型
+// Deref Delegation Method Tests - UInt16 Type
 // ============================================================================
 
 #[test]
@@ -594,7 +594,7 @@ fn test_property_uint16_set() {
 }
 
 // ============================================================================
-// Deref 委托方法测试 - UInt32 类型
+// Deref Delegation Method Tests - UInt32 Type
 // ============================================================================
 
 #[test]
@@ -638,7 +638,7 @@ fn test_property_uint32_set() {
 }
 
 // ============================================================================
-// Deref 委托方法测试 - UInt64 类型
+// Deref Delegation Method Tests - UInt64 Type
 // ============================================================================
 
 #[test]
@@ -684,7 +684,7 @@ fn test_property_uint64_set() {
 }
 
 // ============================================================================
-// Deref 委托方法测试 - UInt128 类型
+// Deref Delegation Method Tests - UInt128 Type
 // ============================================================================
 
 #[test]
@@ -745,7 +745,7 @@ fn test_property_uint128_set() {
 }
 
 // ============================================================================
-// Deref 委托方法测试 - Float32 类型
+// Deref Delegation Method Tests - Float32 Type
 // ============================================================================
 
 #[test]
@@ -789,7 +789,7 @@ fn test_property_float32_set() {
 }
 
 // ============================================================================
-// Deref 委托方法测试 - Float64 类型
+// Deref Delegation Method Tests - Float64 Type
 // ============================================================================
 
 #[test]
@@ -833,7 +833,7 @@ fn test_property_float64_set() {
 }
 
 // ============================================================================
-// Deref 委托方法测试 - String 类型
+// Deref Delegation Method Tests - String Type
 // ============================================================================
 
 #[test]
@@ -887,13 +887,13 @@ fn test_property_string_set() {
 }
 
 // ============================================================================
-// Deref 委托方法测试 - ByteArray 类型
+// Deref Delegation Method Tests - ByteArray Type
 // ============================================================================
 
-// ByteArray 相关测试已移除
+// ByteArray related tests have been removed
 
 // ============================================================================
-// Deref 委托方法测试 - Date 类型
+// Deref Delegation Method Tests - Date Type
 // ============================================================================
 
 #[test]
@@ -948,7 +948,7 @@ fn test_property_date_set() {
 }
 
 // ============================================================================
-// Deref 委托方法测试 - Time 类型
+// Deref Delegation Method Tests - Time Type
 // ============================================================================
 
 #[test]
@@ -1003,7 +1003,7 @@ fn test_property_time_set() {
 }
 
 // ============================================================================
-// Deref 委托方法测试 - Instant 类型
+// Deref Delegation Method Tests - Instant Type
 // ============================================================================
 
 #[test]
@@ -1058,7 +1058,7 @@ fn test_property_instant_set() {
 }
 
 // ============================================================================
-// Deref 委托方法测试 - BigInteger 类型
+// Deref Delegation Method Tests - BigInteger Type
 // ============================================================================
 
 #[test]
@@ -1117,7 +1117,7 @@ fn test_property_bigint_set() {
 }
 
 // ============================================================================
-// Deref 委托方法测试 - BigDecimal 类型
+// Deref Delegation Method Tests - BigDecimal Type
 // ============================================================================
 
 #[test]
@@ -1176,7 +1176,7 @@ fn test_property_bigdecimal_set() {
 }
 
 // ============================================================================
-// 错误处理测试
+// Error Handling Tests
 // ============================================================================
 
 #[test]
@@ -1184,11 +1184,11 @@ fn test_property_type_mismatch_error() {
     let mut prop = Property::new("test");
     prop.set_value(MultiValues::Int32(vec![42]));
 
-    // 尝试获取错误类型
+    // Try to get wrong type
     let result = prop.get_strings();
     assert!(result.is_err());
 
-    // 尝试添加错误类型
+    // Try to add wrong type
     let result = prop.add_string("hello".to_string());
     assert!(result.is_err());
 }
@@ -1198,7 +1198,7 @@ fn test_property_empty_value_error() {
     let mut prop = Property::new("test");
     prop.set_value(MultiValues::Empty(DataType::Int32));
 
-    // 尝试获取第一个值
+    // Try to get first value
     let result = prop.get_first_int32();
     assert!(result.is_err());
 }
@@ -1208,13 +1208,13 @@ fn test_property_empty_get_returns_empty_slice() {
     let mut prop = Property::new("test");
     prop.set_value(MultiValues::Empty(DataType::Int32));
 
-    // 获取所有值应该返回空切片
+    // Getting all values should return empty slice
     let values = prop.get_int32s().unwrap();
     assert!(values.is_empty());
 }
 
 // ============================================================================
-// 泛型方法测试 - get<T>()
+// Generic Method Tests - get<T>()
 // ============================================================================
 
 #[test]
@@ -1283,7 +1283,7 @@ fn test_property_generic_get_string() {
     assert_eq!(values, vec!["hello", "world"]);
 }
 
-// ByteArray 相关测试已移除
+// ByteArray related tests have been removed
 
 #[test]
 fn test_property_generic_get_bigint() {
@@ -1311,7 +1311,7 @@ fn test_property_generic_get_bigdecimal() {
 }
 
 // ============================================================================
-// 泛型方法测试 - get_first<T>()
+// Generic Method Tests - get_first<T>()
 // ============================================================================
 
 #[test]
@@ -1363,7 +1363,7 @@ fn test_property_generic_get_first_float64() {
 }
 
 // ============================================================================
-// 泛型方法测试 - set<T>() - 单值
+// Generic Method Tests - set<T>() - Single Value
 // ============================================================================
 
 #[test]
@@ -1407,7 +1407,7 @@ fn test_property_generic_set_single_float64() {
 }
 
 // ============================================================================
-// 泛型方法测试 - set<T>() - 多值 Vec
+// Generic Method Tests - set<T>() - Multiple Values Vec
 // ============================================================================
 
 #[test]
@@ -1452,7 +1452,7 @@ fn test_property_generic_set_vec_float64() {
 }
 
 // ============================================================================
-// 泛型方法测试 - set<T>() - 切片
+// Generic Method Tests - set<T>() - Slice
 // ============================================================================
 
 #[test]
@@ -1492,7 +1492,7 @@ fn test_property_generic_set_slice_float64() {
 }
 
 // ============================================================================
-// 泛型方法测试 - add<T>() - 单值
+// Generic Method Tests - add<T>() - Single Value
 // ============================================================================
 
 #[test]
@@ -1536,7 +1536,7 @@ fn test_property_generic_add_single_float64() {
 }
 
 // ============================================================================
-// 泛型方法测试 - add<T>() - 多值 Vec
+// Generic Method Tests - add<T>() - Multiple Values Vec
 // ============================================================================
 
 #[test]
@@ -1581,7 +1581,7 @@ fn test_property_generic_add_vec_float64() {
 }
 
 // ============================================================================
-// 泛型方法测试 - add<T>() - 切片
+// Generic Method Tests - add<T>() - Slice
 // ============================================================================
 
 #[test]
@@ -1621,7 +1621,7 @@ fn test_property_generic_add_slice_float64() {
 }
 
 // ============================================================================
-// 边界情况测试
+// Edge Case Tests
 // ============================================================================
 
 #[test]
@@ -1633,7 +1633,7 @@ fn test_property_empty_after_clear() {
     prop.clear();
     assert_eq!(prop.count(), 0);
     assert!(prop.is_empty());
-    assert_eq!(prop.data_type(), DataType::Int32); // 类型保持不变
+    assert_eq!(prop.data_type(), DataType::Int32); // Type remains unchanged
 }
 
 #[test]
@@ -1656,7 +1656,7 @@ fn test_property_clone() {
         "hello".to_string(),
         "world".to_string(),
     ]));
-    prop1.set_description(Some("测试属性".to_string()));
+    prop1.set_description(Some("Test property".to_string()));
     prop1.set_final(true);
 
     let prop2 = prop1.clone();
@@ -1672,7 +1672,7 @@ fn test_property_clone() {
 fn test_property_debug_format() {
     let mut prop = Property::new("test.property");
     prop.set_value(MultiValues::Int32(vec![42, 43]));
-    prop.set_description(Some("测试属性".to_string()));
+    prop.set_description(Some("Test property".to_string()));
 
     let debug_str = format!("{:?}", prop);
     assert!(debug_str.contains("test.property"));
@@ -1685,15 +1685,15 @@ fn test_property_debug_format() {
 fn test_property_partial_eq() {
     let mut prop1 = Property::new("test");
     prop1.set_value(MultiValues::Int32(vec![42, 43]));
-    prop1.set_description(Some("测试".to_string()));
+    prop1.set_description(Some("Test".to_string()));
 
     let mut prop2 = Property::new("test");
     prop2.set_value(MultiValues::Int32(vec![42, 43]));
-    prop2.set_description(Some("测试".to_string()));
+    prop2.set_description(Some("Test".to_string()));
 
     assert_eq!(prop1, prop2);
 
-    // 修改其中一个
+    // Modify one of them
     prop2.set_value(MultiValues::Int32(vec![44, 45]));
     assert_ne!(prop1, prop2);
 }

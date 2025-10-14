@@ -72,7 +72,7 @@ mod test_with_description {
 
     #[test]
     fn test_with_description_has_correct_default_values() {
-        let config = Config::with_description("测试配置");
+        let config = Config::with_description("Test Configuration");
         assert!(config.is_enable_variable_substitution());
         assert_eq!(config.max_substitution_depth(), 64);
     }
@@ -85,7 +85,7 @@ mod test_with_description {
 }
 
 // ============================================================================
-// 基本属性访问测试
+// Basic Property Access Tests
 // ============================================================================
 
 #[cfg(test)]
@@ -100,29 +100,29 @@ mod test_description {
 
     #[test]
     fn test_description_returns_some_for_config_with_description() {
-        let config = Config::with_description("测试配置");
-        assert_eq!(config.description(), Some("测试配置"));
+        let config = Config::with_description("Test Configuration");
+        assert_eq!(config.description(), Some("Test Configuration"));
     }
 
     #[test]
     fn test_set_description_sets_description() {
         let mut config = Config::new();
-        config.set_description(Some("新描述".to_string()));
-        assert_eq!(config.description(), Some("新描述"));
+        config.set_description(Some("New description".to_string()));
+        assert_eq!(config.description(), Some("New description"));
     }
 
     #[test]
     fn test_set_description_clears_description() {
-        let mut config = Config::with_description("原描述");
+        let mut config = Config::with_description("Original description");
         config.set_description(None);
         assert!(config.description().is_none());
     }
 
     #[test]
     fn test_set_description_updates_description() {
-        let mut config = Config::with_description("原描述");
-        config.set_description(Some("新描述".to_string()));
-        assert_eq!(config.description(), Some("新描述"));
+        let mut config = Config::with_description("Original description");
+        config.set_description(Some("New description".to_string()));
+        assert_eq!(config.description(), Some("New description"));
     }
 }
 
@@ -177,7 +177,7 @@ mod test_max_substitution_depth {
 }
 
 // ============================================================================
-// 配置项管理测试
+// Configuration Item Management Tests
 // ============================================================================
 
 #[cfg(test)]
@@ -352,14 +352,14 @@ mod test_keys {
 }
 
 // ============================================================================
-// 核心泛型方法测试 - get<T>
+// Core Generic Method Tests - get<T>
 // ============================================================================
 
 #[cfg(test)]
 mod test_get {
     use super::*;
 
-    // 字符串类型测试
+    // String type tests
     #[test]
     fn test_get_string() {
         let mut config = Config::new();
@@ -376,7 +376,7 @@ mod test_get {
         assert!(matches!(result, Err(ConfigError::PropertyNotFound(_))));
     }
 
-    // 整数类型测试
+    // Integer type tests
     #[test]
     fn test_get_i8() {
         let mut config = Config::new();
@@ -417,7 +417,7 @@ mod test_get {
         assert_eq!(value, 42);
     }
 
-    // 注意：isize 类型没有实现 IntoPropertyValue 和 FromPropertyValue trait
+    // Note: isize type does not implement IntoPropertyValue and FromPropertyValue traits
     // #[test]
     // fn test_get_isize() {
     //     let mut config = Config::new();
@@ -426,9 +426,9 @@ mod test_get {
     //     assert_eq!(value, 42);
     // }
 
-    // 无符号整数类型测试
-    // 注意：跳过 u8 测试，因为 Vec<u8> 被用作字节数组
-    // u8 的功能可以通过 u16 类似测试覆盖
+    // Unsigned integer type tests
+    // Note: Skip u8 test because Vec<u8> is used as byte array
+    // u8 functionality can be covered by similar u16 tests
     // #[test]
     // fn test_get_u8() {
     //     let mut config = Config::new();
@@ -469,7 +469,7 @@ mod test_get {
         assert_eq!(value, 42);
     }
 
-    // 注意：usize 类型没有实现 IntoPropertyValue 和 FromPropertyValue trait
+    // Note: usize type does not implement IntoPropertyValue and FromPropertyValue traits
     // #[test]
     // fn test_get_usize() {
     //     let mut config = Config::new();
@@ -478,7 +478,7 @@ mod test_get {
     //     assert_eq!(value, 42);
     // }
 
-    // 浮点数类型测试
+    // Float type tests
     #[test]
     fn test_get_f32() {
         let mut config = Config::new();
@@ -495,7 +495,7 @@ mod test_get {
         assert_eq!(value, 3.5);
     }
 
-    // 布尔类型测试
+    // Boolean type tests
     #[test]
     fn test_get_bool_true() {
         let mut config = Config::new();
@@ -512,7 +512,7 @@ mod test_get {
         assert!(!value);
     }
 
-    // 字符类型测试
+    // Character type tests
     #[test]
     fn test_get_char() {
         let mut config = Config::new();
@@ -521,7 +521,7 @@ mod test_get {
         assert_eq!(value, 'A');
     }
 
-    // 日期时间类型测试
+    // Date and time type tests
     #[test]
     fn test_get_naive_date() {
         let mut config = Config::new();
@@ -560,10 +560,10 @@ mod test_get {
         assert_eq!(value, datetime);
     }
 
-    // 字节数组类型测试
-    // 注意: Vec<u8> 不再作为单个值类型支持, 移除此测试
+    // Byte array type tests
+    // Note: Vec<u8> is no longer supported as a single value type, test removed
 
-    // 类型不匹配测试
+    // Type mismatch tests
     #[test]
     fn test_get_type_mismatch() {
         let mut config = Config::new();
@@ -575,7 +575,7 @@ mod test_get {
 }
 
 // ============================================================================
-// 核心泛型方法测试 - get_or<T>
+// Core Generic Method Tests - get_or<T>
 // ============================================================================
 
 #[cfg(test)]
@@ -629,7 +629,7 @@ mod test_get_or {
 }
 
 // ============================================================================
-// 核心泛型方法测试 - get_list<T>
+// Core Generic Method Tests - get_list<T>
 // ============================================================================
 
 #[cfg(test)]
@@ -688,7 +688,7 @@ mod test_get_list {
 }
 
 // ============================================================================
-// 核心泛型方法测试 - set<T>
+// Core Generic Method Tests - set<T>
 // ============================================================================
 
 #[cfg(test)]
@@ -744,7 +744,7 @@ mod test_set {
         assert_eq!(value, "value2");
     }
 
-    // 测试所有支持的数据类型
+    // Test all supported data types
     #[test]
     fn test_set_all_integer_types() {
         let mut config = Config::new();
@@ -754,10 +754,10 @@ mod test_set {
         config.set("i32", 42i32).unwrap();
         config.set("i64", 42i64).unwrap();
         config.set("i128", 42i128).unwrap();
-        // 注意：isize 和 usize 类型没有实现 IntoPropertyValue 和 FromPropertyValue trait
+        // Note: isize and usize types do not implement IntoPropertyValue and FromPropertyValue traits
         // config.set("isize", 42isize).unwrap();
 
-        // 注意：u8 不支持泛型 set，因为 Vec<u8> 被用作字节数组
+        // Note: u8 does not support generic set because Vec<u8> is used as byte array
         // config.set("u8", 42u8).unwrap();
         config.set("u16", 42u16).unwrap();
         config.set("u32", 42u32).unwrap();
@@ -826,7 +826,7 @@ mod test_set {
 }
 
 // ============================================================================
-// 核心泛型方法测试 - add<T>
+// Core Generic Method Tests - add<T>
 // ============================================================================
 
 #[cfg(test)]
@@ -880,7 +880,7 @@ mod test_add {
 }
 
 // ============================================================================
-// 字符串特殊处理测试
+// String Special Handling Tests
 // ============================================================================
 
 #[cfg(test)]
@@ -951,7 +951,7 @@ mod test_get_string_or {
 }
 
 // ============================================================================
-// get_string_list 测试
+// get_string_list Tests
 // ============================================================================
 
 #[cfg(test)]
@@ -1030,7 +1030,7 @@ mod test_get_string_list {
 }
 
 // ============================================================================
-// get_string_list_or 测试
+// get_string_list_or Tests
 // ============================================================================
 
 #[cfg(test)]
@@ -1073,7 +1073,7 @@ mod test_get_string_list_or {
 }
 
 // ============================================================================
-// Default trait 测试
+// Default Trait Tests
 // ============================================================================
 
 #[cfg(test)]

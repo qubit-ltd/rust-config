@@ -6,17 +6,17 @@
  *    All rights reserved.
  *
  ******************************************************************************/
-//! # Configured 类单元测试
+//! # Configured Class Unit Tests
 //!
-//! 测试 Configured 类的所有公共方法，包括 Configurable trait 的实现。
+//! Tests all public methods of the Configured class, including Configurable trait implementation.
 
 use prism3_config::{Config, Configurable, Configured};
 
 // ============================================================================
-// 测试辅助函数
+// Test Helper Functions
 // ============================================================================
 
-/// 创建测试用的配置对象
+/// Creates a test configuration object
 fn create_test_config() -> Config {
     let mut config = Config::new();
     config.set("test_string", "value").unwrap();
@@ -25,15 +25,15 @@ fn create_test_config() -> Config {
     config
 }
 
-/// 创建带描述的测试配置
+/// Creates a test configuration with description
 fn create_test_config_with_description() -> Config {
-    let mut config = Config::with_description("测试配置");
+    let mut config = Config::with_description("Test Configuration");
     config.set("test", "value").unwrap();
     config
 }
 
 // ============================================================================
-// 构造函数测试
+// Constructor Tests
 // ============================================================================
 
 #[cfg(test)]
@@ -99,13 +99,16 @@ mod test_with_config {
         let config = create_test_config_with_description();
         let configured = Configured::with_config(config);
 
-        assert_eq!(configured.config().description(), Some("测试配置"));
+        assert_eq!(
+            configured.config().description(),
+            Some("Test Configuration")
+        );
         assert!(configured.config().contains("test"));
     }
 }
 
 // ============================================================================
-// Configurable trait 实现测试
+// Configurable Trait Implementation Tests
 // ============================================================================
 
 #[cfg(test)]
@@ -125,7 +128,7 @@ mod test_config {
         let config_ref1 = configured.config();
         let config_ref2 = configured.config();
 
-        // 两个引用应该指向同一个配置对象
+        // Both references should point to the same configuration object
         assert_eq!(config_ref1.len(), config_ref2.len());
         assert_eq!(config_ref1.is_empty(), config_ref2.is_empty());
     }
@@ -160,12 +163,12 @@ mod test_config_mut {
     fn test_config_mut_allows_modification() {
         let mut configured = Configured::new();
 
-        // 通过 config_mut 设置值
+        // Set values through config_mut
         configured.config_mut().set("key1", "value1").unwrap();
         configured.config_mut().set("key2", 42).unwrap();
         configured.config_mut().set("key3", true).unwrap();
 
-        // 验证值被正确设置
+        // Verify values are set correctly
         assert_eq!(configured.config().len(), 3);
         assert!(configured.config().contains("key1"));
         assert!(configured.config().contains("key2"));
@@ -209,8 +212,8 @@ mod test_config_mut {
 
         configured
             .config_mut()
-            .set_description(Some("新描述".to_string()));
-        assert_eq!(configured.config().description(), Some("新描述"));
+            .set_description(Some("New description".to_string()));
+        assert_eq!(configured.config().description(), Some("New description"));
 
         configured.config_mut().set_description(None);
         assert!(configured.config().description().is_none());
@@ -288,18 +291,18 @@ mod test_set_config {
         let mut configured = Configured::new();
         assert!(configured.config().description().is_none());
 
-        let mut config_with_desc = Config::with_description("新配置");
+        let mut config_with_desc = Config::with_description("New configuration");
         config_with_desc.set("test", "value").unwrap();
 
         configured.set_config(config_with_desc);
 
-        assert_eq!(configured.config().description(), Some("新配置"));
+        assert_eq!(configured.config().description(), Some("New configuration"));
         assert!(configured.config().contains("test"));
     }
 
     #[test]
     fn test_set_config_triggers_on_config_changed() {
-        // 创建一个自定义的 Configured 实现来测试回调
+        // Create a custom Configured implementation to test callback
         struct TestConfigured {
             configured: Configured,
             changed_called: bool,
@@ -341,13 +344,13 @@ mod test_on_config_changed {
     #[test]
     fn test_on_config_changed_default_implementation() {
         let mut configured = Configured::new();
-        // 默认实现应该不执行任何操作，不会 panic
+        // Default implementation should do nothing and not panic
         configured.on_config_changed();
     }
 
     #[test]
     fn test_on_config_changed_called_by_set_config() {
-        // 创建一个自定义的 Configured 实现来测试回调
+        // Create a custom Configured implementation to test callback
         struct TestConfigured {
             configured: Configured,
             callback_count: usize,
@@ -386,7 +389,7 @@ mod test_on_config_changed {
 }
 
 // ============================================================================
-// 委托方法测试
+// Delegate Method Tests
 // ============================================================================
 
 #[cfg(test)]
@@ -418,7 +421,7 @@ mod test_default {
 }
 
 // ============================================================================
-// 集成测试
+// Integration Tests
 // ============================================================================
 
 #[cfg(test)]
@@ -427,11 +430,11 @@ mod integration_tests {
 
     #[test]
     fn test_configured_full_workflow() {
-        // 创建 Configured 实例
+        // Create Configured instance
         let mut configured = Configured::new();
         assert!(configured.config().is_empty());
 
-        // 设置配置
+        // Set configuration
         configured.config_mut().set("server.port", 8080).unwrap();
         configured
             .config_mut()
@@ -439,7 +442,7 @@ mod integration_tests {
             .unwrap();
         configured.config_mut().set("server.debug", true).unwrap();
 
-        // 验证配置
+        // Verify configuration
         assert_eq!(configured.config().len(), 3);
         let port: i32 = configured.config().get("server.port").unwrap();
         let host: String = configured.config().get("server.host").unwrap();
@@ -449,32 +452,35 @@ mod integration_tests {
         assert_eq!(host, "localhost");
         assert!(debug);
 
-        // 修改配置
+        // Modify configuration
         configured.config_mut().set("server.port", 9090).unwrap();
         let new_port: i32 = configured.config().get("server.port").unwrap();
         assert_eq!(new_port, 9090);
 
-        // 添加新配置
+        // Add new configuration
         configured
             .config_mut()
             .set("database.url", "postgresql://localhost/db")
             .unwrap();
         assert_eq!(configured.config().len(), 4);
 
-        // 移除配置
+        // Remove configuration
         configured.config_mut().remove("server.debug");
         assert_eq!(configured.config().len(), 3);
         assert!(!configured.config().contains("server.debug"));
 
-        // 替换整个配置
-        let mut new_config = Config::with_description("新服务器配置");
+        // Replace entire configuration
+        let mut new_config = Config::with_description("New server configuration");
         new_config.set("app.name", "MyApp").unwrap();
         new_config.set("app.version", "1.0.0").unwrap();
 
         configured.set_config(new_config);
 
         assert_eq!(configured.config().len(), 2);
-        assert_eq!(configured.config().description(), Some("新服务器配置"));
+        assert_eq!(
+            configured.config().description(),
+            Some("New server configuration")
+        );
         assert!(!configured.config().contains("server.port"));
         assert!(configured.config().contains("app.name"));
 
@@ -488,16 +494,16 @@ mod integration_tests {
     fn test_configured_with_different_data_types() {
         let mut configured = Configured::new();
 
-        // 测试所有支持的数据类型
+        // Test all supported data types
         configured.config_mut().set("int8", 42i8).unwrap();
         configured.config_mut().set("int16", 42i16).unwrap();
         configured.config_mut().set("int32", 42i32).unwrap();
         configured.config_mut().set("int64", 42i64).unwrap();
         configured.config_mut().set("int128", 42i128).unwrap();
-        // 注意：isize 和 usize 类型没有实现 IntoPropertyValue 和 FromPropertyValue trait
+        // Note: isize and usize types do not implement IntoPropertyValue and FromPropertyValue traits
         // configured.config_mut().set("isize", 42isize).unwrap();
 
-        // 注意：u8 不支持泛型 set，因为 Vec<u8> 被用作字节数组
+        // Note: u8 does not support generic set because Vec<u8> is used as byte array
         // configured.config_mut().set("uint8", 42u8).unwrap();
         configured.config_mut().set("uint16", 42u16).unwrap();
         configured.config_mut().set("uint32", 42u32).unwrap();
@@ -512,7 +518,7 @@ mod integration_tests {
         configured.config_mut().set("character", 'A').unwrap();
         configured.config_mut().set("string", "test").unwrap();
 
-        // 验证所有值
+        // Verify all values
         assert_eq!(configured.config().get::<i8>("int8").unwrap(), 42);
         assert_eq!(configured.config().get::<i16>("int16").unwrap(), 42);
         assert_eq!(configured.config().get::<i32>("int32").unwrap(), 42);
@@ -539,7 +545,7 @@ mod integration_tests {
     fn test_configured_with_vectors() {
         let mut configured = Configured::new();
 
-        // 测试向量类型
+        // Test vector types
         configured
             .config_mut()
             .set("int_list", vec![1, 2, 3, 4, 5])
@@ -556,7 +562,7 @@ mod integration_tests {
             .set("bool_list", vec![true, false, true])
             .unwrap();
 
-        // 验证向量值
+        // Verify vector values
         let int_list: Vec<i32> = configured.config().get_list("int_list").unwrap();
         let string_list: Vec<String> = configured.config().get_list("string_list").unwrap();
         let bool_list: Vec<bool> = configured.config().get_list("bool_list").unwrap();
@@ -565,7 +571,7 @@ mod integration_tests {
         assert_eq!(string_list, vec!["a", "b", "c"]);
         assert_eq!(bool_list, vec![true, false, true]);
 
-        // 测试添加值到现有列表
+        // Test adding values to existing list
         configured.config_mut().add("int_list", 6).unwrap();
         let updated_int_list: Vec<i32> = configured.config().get_list("int_list").unwrap();
         assert_eq!(updated_int_list, vec![1, 2, 3, 4, 5, 6]);
