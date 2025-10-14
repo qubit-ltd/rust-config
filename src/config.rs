@@ -558,7 +558,7 @@ impl Config {
             + MultiValuesSetterSlice<<S as MultiValuesSetArg<'static>>::Item>
             + MultiValuesSingleSetter<<S as MultiValuesSetArg<'static>>::Item>,
     {
-        // 检查是否是最终值
+        // Check if it's a final value
         if let Some(prop) = self.properties.get(name) {
             if prop.is_final() {
                 return Err(ConfigError::PropertyIsFinal(name.to_string()));
