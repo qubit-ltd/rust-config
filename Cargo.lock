@@ -388,9 +388,9 @@ dependencies = [
 
 [[package]]
 name = "prism3-value"
-version = "0.1.0"
+version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "052250ff843dc8ea7f2b8bd3e3a5af3b2a659f30de7ff129de1e8f0a9f5d6de1"
+checksum = "d1145ed16519d20f66287745ad4540edb1619eb55dacb2fb768e57b71ae66ecc"
 dependencies = [
  "bigdecimal",
  "chrono",
