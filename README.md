@@ -1,8 +1,8 @@
-# prism3-config
+# qubit-config
 
-[![CircleCI](https://circleci.com/gh/3-prism/prism3-rust-config.svg?style=shield)](https://circleci.com/gh/3-prism/prism3-rust-config)
-[![Coverage Status](https://coveralls.io/repos/github/3-prism/prism3-rust-config/badge.svg?branch=main)](https://coveralls.io/github/3-prism/prism3-rust-config?branch=main)
-[![Crates.io](https://img.shields.io/crates/v/prism3-config.svg?color=blue)](https://crates.io/crates/prism3-config)
+[![CircleCI](https://circleci.com/gh/qubit-ltd/rust-config.svg?style=shield)](https://circleci.com/gh/qubit-ltd/rust-config)
+[![Coverage Status](https://coveralls.io/repos/github/qubit-ltd/rust-config/badge.svg?branch=main)](https://coveralls.io/github/qubit-ltd/rust-config?branch=main)
+[![Crates.io](https://img.shields.io/crates/v/qubit-config.svg?color=blue)](https://crates.io/crates/qubit-config)
 [![Rust](https://img.shields.io/badge/rust-1.70+-blue.svg?logo=rust)](https://www.rust-lang.org)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![中文文档](https://img.shields.io/badge/文档-中文版-blue.svg)](README.zh_CN.md)
@@ -26,13 +26,13 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-prism3-config = "0.1"
+qubit-config = "0.2"
 ```
 
 ## Quick Start
 
 ```rust
-use prism3_config::Config;
+use qubit_config::Config;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut config = Config::new();
@@ -87,7 +87,7 @@ A type-safe container that can hold multiple values of the same data type.
 ### Basic Configuration
 
 ```rust
-use prism3_config::Config;
+use qubit_config::Config;
 
 let mut config = Config::new();
 
@@ -166,7 +166,7 @@ let db_config = DatabaseConfig {
 ### Configurable Objects
 
 ```rust
-use prism3_config::{Configurable, Configured};
+use qubit_config::{Configurable, Configured};
 
 // Use the Configured base class
 let mut configured = Configured::new();
@@ -215,12 +215,12 @@ app.config_mut().set("port", 3000)?;
 
 ## Extending with Custom Types
 
-To support custom types in the configuration system, you need to implement the necessary traits from `prism3_value`. The configuration system uses the `MultiValues` infrastructure for type-safe storage and retrieval.
+To support custom types in the configuration system, you need to implement the necessary traits from `qubit_value`. The configuration system uses the `MultiValues` infrastructure for type-safe storage and retrieval.
 
 Here's an example of how to work with custom types:
 
 ```rust
-use prism3_config::Config;
+use qubit_config::Config;
 
 // Define your custom type
 #[derive(Debug, Clone, PartialEq)]
@@ -256,7 +256,7 @@ let port = Port::new(config.get_or("port", 8080u16))
     .map_err(|e| ConfigError::ConversionError(e))?;
 ```
 
-For more advanced type conversions, you can implement the traits from `prism3_value` (`MultiValuesFirstGetter`, `MultiValuesSetter`, etc.). See the `prism3_value` documentation for details on implementing these traits for custom types.
+For more advanced type conversions, you can implement the traits from `qubit_value` (`MultiValuesFirstGetter`, `MultiValuesSetter`, etc.). See the `qubit_value` documentation for details on implementing these traits for custom types.
 
 ## API Design Philosophy
 
@@ -331,14 +331,14 @@ Run with code coverage:
 
 ## Documentation
 
-For detailed API documentation, visit [docs.rs/prism3-config](https://docs.rs/prism3-config).
+For detailed API documentation, visit [docs.rs/qubit-config](https://docs.rs/qubit-config).
 
 For internal design documentation (Chinese), see [src/README.md](src/README.md).
 
 ## Dependencies
 
-- `prism3-core` - Core utilities and data type definitions
-- `prism3-value` - Value handling framework
+- `qubit-common` - Core utilities and data type definitions
+- `qubit-value` - Value handling framework
 - `serde` - Serialization framework
 - `chrono` - Date and time handling
 - `regex` - Regular expression support
@@ -358,7 +358,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-Copyright (c) 2025 3-Prism Co. Ltd. All rights reserved.
+Copyright (c) 2025 - 2026. Haixing Hu, Qubit Co. Ltd. All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -376,8 +376,8 @@ See [LICENSE](LICENSE) for the full license text.
 
 ## Author
 
-**Haixing Hu** - *3-Prism Co. Ltd.*
+**Haixing Hu** - *Qubit Co. Ltd.*
 
 ---
 
-For more information about the Prism3 ecosystem, visit our [GitHub homepage](https://github.com/3-prism).
+For more information about the Qubit Rust libraries, visit our [GitHub organization](https://github.com/qubit-ltd).

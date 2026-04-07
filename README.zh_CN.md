@@ -1,8 +1,8 @@
-# prism3-config
+# qubit-config
 
-[![CircleCI](https://circleci.com/gh/3-prism/prism3-rust-config.svg?style=shield)](https://circleci.com/gh/3-prism/prism3-rust-config)
-[![Coverage Status](https://coveralls.io/repos/github/3-prism/prism3-rust-config/badge.svg?branch=main)](https://coveralls.io/github/3-prism/prism3-rust-config?branch=main)
-[![Crates.io](https://img.shields.io/crates/v/prism3-config.svg?color=blue)](https://crates.io/crates/prism3-config)
+[![CircleCI](https://circleci.com/gh/qubit-ltd/rust-config.svg?style=shield)](https://circleci.com/gh/qubit-ltd/rust-config)
+[![Coverage Status](https://coveralls.io/repos/github/qubit-ltd/rust-config/badge.svg?branch=main)](https://coveralls.io/github/qubit-ltd/rust-config?branch=main)
+[![Crates.io](https://img.shields.io/crates/v/qubit-config.svg?color=blue)](https://crates.io/crates/qubit-config)
 [![Rust](https://img.shields.io/badge/rust-1.70+-blue.svg?logo=rust)](https://www.rust-lang.org)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![English Doc](https://img.shields.io/badge/doc-English-blue.svg)](README.md)
@@ -28,13 +28,13 @@
 
 ```toml
 [dependencies]
-prism3-config = "0.1"
+qubit-config = "0.2"
 ```
 
 ## 快速开始
 
 ```rust
-use prism3_config::Config;
+use qubit_config::Config;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut config = Config::new();
@@ -89,7 +89,7 @@ config.set("database.port", 5432)?;
 ### 基本配置
 
 ```rust
-use prism3_config::Config;
+use qubit_config::Config;
 
 let mut config = Config::new();
 
@@ -168,7 +168,7 @@ let db_config = DatabaseConfig {
 ### 可配置对象
 
 ```rust
-use prism3_config::{Configurable, Configured};
+use qubit_config::{Configurable, Configured};
 
 // 使用 Configured 基类
 let mut configured = Configured::new();
@@ -217,12 +217,12 @@ app.config_mut().set("port", 3000)?;
 
 ## 扩展自定义类型
 
-要在配置系统中支持自定义类型，您需要实现 `prism3_value` 中的必要 trait。配置系统使用 `MultiValues` 基础设施进行类型安全的存储和检索。
+要在配置系统中支持自定义类型，您需要实现 `qubit_value` 中的必要 trait。配置系统使用 `MultiValues` 基础设施进行类型安全的存储和检索。
 
 以下是如何使用自定义类型的示例：
 
 ```rust
-use prism3_config::Config;
+use qubit_config::Config;
 
 // 定义自定义类型
 #[derive(Debug, Clone, PartialEq)]
@@ -258,7 +258,7 @@ let port = Port::new(config.get_or("port", 8080u16))
     .map_err(|e| ConfigError::ConversionError(e))?;
 ```
 
-对于更高级的类型转换，您可以实现 `prism3_value` 中的 trait（`MultiValuesFirstGetter`、`MultiValuesSetter` 等）。有关为自定义类型实现这些 trait 的详细信息，请参阅 `prism3_value` 文档。
+对于更高级的类型转换，您可以实现 `qubit_value` 中的 trait（`MultiValuesFirstGetter`、`MultiValuesSetter` 等）。有关为自定义类型实现这些 trait 的详细信息，请参阅 `qubit_value` 文档。
 
 ## API 设计哲学
 
@@ -333,14 +333,14 @@ cargo test
 
 ## 文档
 
-详细的 API 文档请访问 [docs.rs/prism3-config](https://docs.rs/prism3-config)。
+详细的 API 文档请访问 [docs.rs/qubit-config](https://docs.rs/qubit-config)。
 
 内部设计文档请参阅 [src/README.md](src/README.md)。
 
 ## 依赖项
 
-- `prism3-core` - 核心工具和数据类型定义
-- `prism3-value` - 值处理框架
+- `qubit-common` - 核心工具和数据类型定义
+- `qubit-value` - 值处理框架
 - `serde` - 序列化框架
 - `chrono` - 日期和时间处理
 - `regex` - 正则表达式支持
@@ -360,7 +360,7 @@ cargo test
 
 ## 许可证
 
-Copyright (c) 2025 3-Prism Co. Ltd. All rights reserved.
+Copyright (c) 2025 - 2026. Haixing Hu, Qubit Co. Ltd. All rights reserved.
 
 根据 Apache 许可证 2.0 版（"许可证"）授权；
 除非遵守许可证，否则您不得使用此文件。
@@ -380,8 +380,8 @@ Copyright (c) 2025 3-Prism Co. Ltd. All rights reserved.
 
 ## 作者
 
-**胡海星** - *棱芯科技有限公司*
+**胡海星** - *Qubit Co. Ltd.*
 
 ---
 
-有关 Prism3 生态系统的更多信息，请访问我们的 [GitHub 主页](https://github.com/3-prism)。
+有关 Qubit Rust 库的更多信息，请访问我们的 [GitHub 组织](https://github.com/qubit-ltd)。
