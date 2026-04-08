@@ -153,6 +153,30 @@ impl ConfigError {
     }
 }
 
+impl From<ValueError> for ConfigError {
+    fn from(err: ValueError) -> Self {
+        match err {
+            ValueError::NoValue => ConfigError::PropertyHasNoValue(String::new()),
+            ValueError::TypeMismatch { expected, actual } => {
+                ConfigError::type_mismatch_no_key(expected, actual)
+            }
+            ValueError::ConversionFailed { from, to } => {
+                ConfigError::conversion_error_no_key(format!("From {from} to {to}"))
+            }
+            ValueError::ConversionError(msg) => ConfigError::conversion_error_no_key(msg),
+            ValueError::IndexOutOfBounds { index, len } => {
+                ConfigError::IndexOutOfBounds { index, len }
+            }
+            ValueError::JsonSerializationError(msg) => {
+                ConfigError::conversion_error_no_key(format!("JSON serialization error: {msg}"))
+            }
+            ValueError::JsonDeserializationError(msg) => {
+                ConfigError::conversion_error_no_key(format!("JSON deserialization error: {msg}"))
+            }
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -184,30 +208,6 @@ mod tests {
                 assert_eq!(actual, DataType::Int32);
             }
             _ => panic!("Expected TypeMismatch"),
-        }
-    }
-}
-
-impl From<ValueError> for ConfigError {
-    fn from(err: ValueError) -> Self {
-        match err {
-            ValueError::NoValue => ConfigError::PropertyHasNoValue(String::new()),
-            ValueError::TypeMismatch { expected, actual } => {
-                ConfigError::type_mismatch_no_key(expected, actual)
-            }
-            ValueError::ConversionFailed { from, to } => {
-                ConfigError::conversion_error_no_key(format!("From {from} to {to}"))
-            }
-            ValueError::ConversionError(msg) => ConfigError::conversion_error_no_key(msg),
-            ValueError::IndexOutOfBounds { index, len } => {
-                ConfigError::IndexOutOfBounds { index, len }
-            }
-            ValueError::JsonSerializationError(msg) => {
-                ConfigError::conversion_error_no_key(format!("JSON serialization error: {msg}"))
-            }
-            ValueError::JsonDeserializationError(msg) => {
-                ConfigError::conversion_error_no_key(format!("JSON deserialization error: {msg}"))
-            }
         }
     }
 }
