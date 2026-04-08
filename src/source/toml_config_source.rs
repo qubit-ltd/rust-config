@@ -179,7 +179,10 @@ fn flatten_toml_array(prefix: &str, arr: &[TomlValue], config: &mut Config) -> C
             (ArrayKind::Integer, TomlValue::Integer(_))
                 | (ArrayKind::Float, TomlValue::Float(_))
                 | (ArrayKind::Bool, TomlValue::Boolean(_))
-                | (ArrayKind::String, TomlValue::String(_) | TomlValue::Datetime(_))
+                | (
+                    ArrayKind::String,
+                    TomlValue::String(_) | TomlValue::Datetime(_)
+                )
         )
     });
 
